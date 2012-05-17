@@ -1,0 +1,49 @@
+#include <stdio.h>
+#include <sndfile.h>
+
+#define BUFFER_LENGTH 1024
+
+int main(void)
+{
+  double data[BUFFER_LEN];
+
+  SNDFILE *infile;
+  SNDFILE *outfile;
+  SF_INFO sfinfo;
+  int readcount;
+  const char *infilename="in.wav";
+  const char *outfilename="out.wav";
+
+  if(!(infile = sf_open(infilename, SFM_READ, &sfinfo)))
+  {
+    printf("ERROR:Unable to open file %s\n", infilename);
+    puts(sf_sterror(NULL));
+    return -1;
+  }
+
+if(!(outfile = sf_open(outfilename, SFM_READ, &sfinfo)))
+  {
+    printf("ERROR:Unable to open file %s\n", outfilename);
+    puts(sf_sterror(NULL));
+    return -1;
+  }
+
+ while ((readcount = sf_read_double(infile, data, BUFFER_LENGTH)))
+ {
+   process_data(data, readcount, sfinfo.channels);
+   sf_write_double(outfile, data, readcount);
+ }
+
+ sfclose(infile);
+ sfclose(outfile);
+ return 0;
+}
+
+void process_data(double *data, int readcount, int channels)
+{
+  if (channels == 1) {
+    for (i = 0; i < BUFFER_LEN; i++) {
+      data[i] = 0.5*data[i];
+    }
+  }
+}
