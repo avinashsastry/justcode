@@ -8,7 +8,7 @@ class node {
 // This case, I like though. Makes it much easier.
 // And I don't like using friends.	
 public:
-	unsigned int v;
+	int v;
 	node* prevNode;
 	node* nextNode;
 
@@ -24,7 +24,7 @@ private:
 	node* tail;
 
 public:
-	nodeList(unsigned int* values, unsigned int length);
+	nodeList(int* values, unsigned int length);
 	~nodeList();
 	
 	/* 
@@ -58,8 +58,18 @@ public:
 	void deleteNodeAtIndex(unsigned int i);
 	
 	/* 
+	 * Deletes a node by its address
+	 */
+	void deleteNode(node* delNode);
+	
+	/* 
 	 * Prints out the values of all nodes in the list from head to tail
 	 */
 	void printList();
+	
+	/* 
+	 * reverse a linked list in place
+	 */
+	void reverse();
 };
 	

@@ -133,7 +133,6 @@ class BinarySearchTree {
 	void print() {
 		root->print();
 	}
-	
 };
 
 // A simple example of a binary search tree

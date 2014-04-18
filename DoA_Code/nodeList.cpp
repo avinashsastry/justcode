@@ -14,7 +14,7 @@ node::~node() {
 	nextNode = NULL;
 }
 
-nodeList::nodeList(unsigned int* values, unsigned int length) {
+nodeList::nodeList(int* values, unsigned int length) {
 	
 	head = NULL;
 	tail = NULL;
@@ -174,12 +174,57 @@ void nodeList::deleteNodeAtIndex(unsigned int i) {
 	}
 }
 
+void nodeList::deleteNode(node* delNode) {
+	if (!delNode) return;
+	
+	if (delNode == head) {
+		deleteNodeAtHead();
+	}
+	else if (delNode == tail) {
+		deleteNodeAtTail();
+	}
+	else {
+		node* prev = delNode->prevNode;
+		node* next = delNode->nextNode;
+		
+		prev->nextNode = next;
+		next->prevNode = prev;
+		
+		// Free up memory - this could get ugly if I'm not careful
+		delete delNode;
+	}
+}
+
 // prints out the values in the node list
 void nodeList::printList() {
 	for (node* tempNode = head; tempNode != NULL; tempNode = tempNode->nextNode) {
 		printf("%d ", tempNode->v);
 	}
 	printf("\n");	
+}
+
+void nodeList::reverse() {
+	node* tempNode1 = head;
+	node* tempNode2 = tail;
+	
+	if (tempNode1 != NULL && tempNode2 != NULL) {
+		while (tempNode1 != tempNode2) {
+			
+			printList();
+		
+			// swap tempNode1 with tempNode2 
+			int swap = tempNode1->v;
+			tempNode1->v = tempNode2->v;
+			tempNode2->v = swap;
+			
+			if (tempNode1->nextNode != tempNode2) {
+				tempNode1 = tempNode1->nextNode;
+				tempNode2 = tempNode2->prevNode;
+			}
+			else
+				break;
+		}
+	}
 }
 
 #if 0
